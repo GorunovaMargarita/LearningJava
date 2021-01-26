@@ -1,4 +1,0 @@
-MyFirstProgram.java
- MyFirstProgram
-MySecondProgram.java
- MySecondProgram
