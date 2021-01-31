@@ -1,6 +1,7 @@
+package ru.stqa.pft.sandbox;
 public class MyFirstProgram {
   public static void main(String[] args) {
-    double distance = 0;
+    double distance;
     //объекты класса Point
     Point p1 = new Point(5, 6);
     Point p2 = new Point(2, 2);
