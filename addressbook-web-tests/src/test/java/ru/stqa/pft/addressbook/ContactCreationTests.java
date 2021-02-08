@@ -19,7 +19,7 @@ public class ContactCreationTests {
   }
 
   @Test
-  public void testContactCreationTests() throws Exception {
+  public void testContactCreation() throws Exception {
     initContactCreation();
     fillNewContactForm(new ContactData("FirstName1", "MiddleName1", "LastName1", "NickName1", "Title1", "Company1", "Address1", "1111", "1111", "1111", "1111", "mail1@mail.ru", "mail2@gmail.com", "mail3@ya.ru", "HomePage1", "1", "January", "1953", "1", "January", "2020", "Goryun Group", "Address2", "Home2", "Notes1"));
     submitContactCreation();
