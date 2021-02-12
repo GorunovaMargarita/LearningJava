@@ -55,6 +55,7 @@ public class ContactData {
     this.additionalNotes = additionalNotes;
   }
 
+
   public String getFirstName() {
     return firstName;
   }

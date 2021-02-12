@@ -22,7 +22,7 @@ public class HelperBase {
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
   }
-  public void chooseFromList(By locator, String text) {
+  public void selectFromList(By locator, String text) {
     click(locator);
     new Select(wd.findElement(locator)).selectByVisibleText(text);
     click(locator);

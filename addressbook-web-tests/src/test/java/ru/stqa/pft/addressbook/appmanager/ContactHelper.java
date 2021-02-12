@@ -36,17 +36,61 @@ public class ContactHelper extends HelperBase{
     type(By.name("email2"),contactData.getEmail2());
     type(By.name("email3"),contactData.getEmail3());
     type(By.name("homepage"),contactData.getHomePage());
-    chooseFromList(By.name("bday"), contactData.getBirthDay());
-    chooseFromList(By.name("bmonth"),contactData.getBirthMonth());
+    selectFromList(By.name("bday"), contactData.getBirthDay());
+    selectFromList(By.name("bmonth"),contactData.getBirthMonth());
     type(By.name("byear"),contactData.getBirthYear());
-    chooseFromList(By.name("aday"),contactData.getAnniversaryDay());
-    chooseFromList(By.name("amonth"),contactData.getAnniversaryMonth());
+    selectFromList(By.name("aday"),contactData.getAnniversaryDay());
+    selectFromList(By.name("amonth"),contactData.getAnniversaryMonth());
     type(By.name("ayear"),contactData.getAnniversaryYear());
-    chooseFromList(By.name("new_group"),contactData.getContactGroup());
+    selectFromList(By.name("new_group"),contactData.getContactGroup());
+    type(By.name("address2"),contactData.getAdditionalAddress());
+    type(By.name("phone2"),contactData.getAdditionalPhone());
+    type(By.name("notes"),contactData.getAdditionalNotes());
+  }
+  public void fillUpdateContactForm(ContactData contactData) {
+    type(By.name("firstname"),contactData.getFirstName());
+    type(By.name("middlename"),contactData.getMiddleName());
+    type(By.name("lastname"),contactData.getLastName());
+    type(By.name("nickname"),contactData.getNickName());
+    type(By.name("title"),contactData.getTitle());
+    type(By.name("company"),contactData.getCompany());
+    type(By.name("address"),contactData.getAddress());
+    type(By.name("home"),contactData.getHomePhone());
+    type(By.name("mobile"),contactData.getMobilePhone());
+    type(By.name("work"),contactData.getWorkPhone());
+    type(By.name("fax"),contactData.getFaxPhone());
+    type(By.name("email"),contactData.getEmail1());
+    type(By.name("email2"),contactData.getEmail2());
+    type(By.name("email3"),contactData.getEmail3());
+    type(By.name("homepage"),contactData.getHomePage());
+    selectFromList(By.name("bday"), contactData.getBirthDay());
+    selectFromList(By.name("bmonth"),contactData.getBirthMonth());
+    type(By.name("byear"),contactData.getBirthYear());
+    selectFromList(By.name("aday"),contactData.getAnniversaryDay());
+    selectFromList(By.name("amonth"),contactData.getAnniversaryMonth());
+    type(By.name("ayear"),contactData.getAnniversaryYear());
     type(By.name("address2"),contactData.getAdditionalAddress());
     type(By.name("phone2"),contactData.getAdditionalPhone());
     type(By.name("notes"),contactData.getAdditionalNotes());
   }
 
+  public void goToHomePage() {
+    click(By.linkText("home"));
+  }
 
+  public void selectContact() {
+    click(By.name("selected[]"));
+  }
+
+  public void submitContactDeletion() {
+    click(By.xpath("//input[@value='Delete']"));
+  }
+
+  public void initContactModification() {
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void submitContactModification() {
+    click(By.name("update"));
+  }
 }
