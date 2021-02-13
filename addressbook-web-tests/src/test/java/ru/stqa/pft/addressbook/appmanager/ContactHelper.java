@@ -54,10 +54,6 @@ public class ContactHelper extends HelperBase{
     type(By.name("notes"),contactData.getAdditionalNotes());
   }
 
-  public void goToHomePage() {
-    click(By.linkText("home"));
-  }
-
   public void selectContact() {
     click(By.name("selected[]"));
   }
