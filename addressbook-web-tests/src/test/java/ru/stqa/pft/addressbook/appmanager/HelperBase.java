@@ -10,7 +10,7 @@ public class HelperBase {
   protected WebDriver wd;
 
   public HelperBase(WebDriver wd) {
-    this.wd=wd;
+    this.wd = wd;
   }
 
   protected void click(By locator) {
@@ -19,14 +19,20 @@ public class HelperBase {
 
   protected void type(By locator, String text) {
     click(locator);
-    wd.findElement(locator).clear();
-    wd.findElement(locator).sendKeys(text);
+    if (text != null) {
+      String existingTest=wd.findElement(locator).getAttribute("value");
+      if (! text.equals(existingTest)) {
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+      }
+    }
   }
+
   public void selectFromList(By locator, String text) {
     click(locator);
     new Select(wd.findElement(locator)).selectByVisibleText(text);
-    click(locator);
   }
+
   public boolean isAlertPresent() {
     try {
       wd.switchTo().alert();
@@ -35,11 +41,12 @@ public class HelperBase {
       return false;
     }
   }
-  public boolean isElementPresent(By by) {
+
+  public boolean isElementPresent(By locator) {
     try {
-      wd.findElement(by);
+      wd.findElement(locator);
       return true;
-    } catch (NoSuchElementException e) {
+    } catch (NoSuchElementException ex) {
       return false;
     }
   }
