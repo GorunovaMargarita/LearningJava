@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 public class HelperBase {
   protected WebDriver wd;
@@ -29,8 +30,12 @@ public class HelperBase {
 
   public void selectFromList(By locator, String text) {
     click(locator);
-    //если в выпадающем списке нет значения, то ничего не выбираем, идём дальше
-    if (isTextInListPresent(locator, text)==true) {
+    //игнорируем отсутствие групп в списке, но для прочих списков проверяем, что значение есть
+    if(! locator.equals(By.name("new_group"))) {
+      Assert.assertEquals(isTextInListPresent(locator,text),true);
+      new Select(wd.findElement(locator)).selectByVisibleText(text);
+
+    } else if (isTextInListPresent(locator, text)) {
       new Select(wd.findElement(locator)).selectByVisibleText(text);
     }
   }
