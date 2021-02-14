@@ -1,9 +1,8 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindAll;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 public class HelperBase {
@@ -20,8 +19,8 @@ public class HelperBase {
   protected void type(By locator, String text) {
     click(locator);
     if (text != null) {
-      String existingTest=wd.findElement(locator).getAttribute("value");
-      if (! text.equals(existingTest)) {
+      String existingText=wd.findElement(locator).getAttribute("value");
+      if (! text.equals(existingText)) {
         wd.findElement(locator).clear();
         wd.findElement(locator).sendKeys(text);
       }
@@ -30,7 +29,10 @@ public class HelperBase {
 
   public void selectFromList(By locator, String text) {
     click(locator);
-    new Select(wd.findElement(locator)).selectByVisibleText(text);
+    //если в выпадающем списке нет значения, то ничего не выбираем, идём дальше
+    if (isTextInListPresent(locator, text)==true) {
+      new Select(wd.findElement(locator)).selectByVisibleText(text);
+    }
   }
 
   public boolean isAlertPresent() {
@@ -47,6 +49,15 @@ public class HelperBase {
       wd.findElement(locator);
       return true;
     } catch (NoSuchElementException ex) {
+      return false;
+    }
+  }
+  public boolean isTextInListPresent (By locator, String text) {
+    try {
+      click(locator);
+      new Select(wd.findElement(locator)).selectByVisibleText(text);
+        return true;
+    } catch(NoSuchElementException ex){
       return false;
     }
   }
