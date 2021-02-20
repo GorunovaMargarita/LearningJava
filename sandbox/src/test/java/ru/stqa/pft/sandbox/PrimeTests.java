@@ -10,17 +10,17 @@ public class PrimeTests {
   }
   @Test
   public void testNonPrimes() {
-    Assert.assertFalse(Prime.isPrime(Integer.MAX_VALUE-2));
+    Assert.assertFalse(Prime.isPrimeFast(Integer.MAX_VALUE-2));
   }
-  @Test
+  @Test(enabled = false)
   public void testPrimesWhile() {
     Assert.assertTrue(Prime.isPrimeWhile(Integer.MAX_VALUE));
   }
-  @Test
+  @Test(enabled = false)
   public void testNonPrimesWhile() {
     Assert.assertFalse(Prime.isPrimeWhile(Integer.MAX_VALUE-2));
   }
-  @Test
+  @Test(enabled = false)
   public void testPrimeslong() {
     long n= Integer.MAX_VALUE;
     Assert.assertTrue(Prime.isPrime(n));
