@@ -30,13 +30,14 @@ public class HelperBase {
 
   public void selectFromList(By locator, String text) {
     click(locator);
-    //игнорируем отсутствие групп в списке, но для прочих списков проверяем, что значение есть
-    if(! locator.equals(By.name("new_group"))) {
-      Assert.assertEquals(isTextInListPresent(locator,text),true);
-      new Select(wd.findElement(locator)).selectByVisibleText(text);
-
-    } else if (isTextInListPresent(locator, text)) {
-      new Select(wd.findElement(locator)).selectByVisibleText(text);
+    if (text != null) {
+      //игнорируем отсутствие групп в списке, но для прочих списков проверяем, что значение есть
+      if (!locator.equals(By.name("new_group"))) {
+        Assert.assertEquals(isTextInListPresent(locator, text), true);
+        new Select(wd.findElement(locator)).selectByVisibleText(text);
+      } else if (isTextInListPresent(locator, text)) {
+        new Select(wd.findElement(locator)).selectByVisibleText(text);
+      }
     }
   }
 

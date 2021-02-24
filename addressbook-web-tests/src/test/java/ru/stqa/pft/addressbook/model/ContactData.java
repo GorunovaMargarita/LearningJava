@@ -1,6 +1,9 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.Objects;
+
 public class ContactData {
+  private int id;
   private final String firstName;
   private final String middleName;
   private final String lastName;
@@ -27,7 +30,8 @@ public class ContactData {
   private final String additionalHome;
   private final String additionalNotes;
 
-  public ContactData(String firstName, String middleName, String lastName, String nickName, String title, String company, String address, String homePhone, String mobilePhone, String workPhone, String faxPhone, String email1, String email2, String email3, String homePage, String birthDay, String birthMonth, String birthYear, String anniversaryDay, String anniversaryMonth, String anniversaryYear, String contactGroup, String additionalAddress, String additionalHome, String additionalNotes) {
+  public ContactData(int id,String firstName, String middleName, String lastName, String nickName, String title, String company, String address, String homePhone, String mobilePhone, String workPhone, String faxPhone, String email1, String email2, String email3, String homePage, String birthDay, String birthMonth, String birthYear, String anniversaryDay, String anniversaryMonth, String anniversaryYear, String contactGroup, String additionalAddress, String additionalHome, String additionalNotes) {
+    this.id=id;
     this.firstName = firstName;
     this.middleName = middleName;
     this.lastName = lastName;
@@ -54,7 +58,34 @@ public class ContactData {
     this.additionalHome = additionalHome;
     this.additionalNotes = additionalNotes;
   }
-
+  public ContactData(String firstName, String middleName, String lastName, String nickName, String title, String company, String address, String homePhone, String mobilePhone, String workPhone, String faxPhone, String email1, String email2, String email3, String homePage, String birthDay, String birthMonth, String birthYear, String anniversaryDay, String anniversaryMonth, String anniversaryYear, String contactGroup, String additionalAddress, String additionalHome, String additionalNotes) {
+    this.id=0;
+    this.firstName = firstName;
+    this.middleName = middleName;
+    this.lastName = lastName;
+    this.nickName = nickName;
+    this.title = title;
+    this.company = company;
+    this.address = address;
+    this.homePhone = homePhone;
+    this.mobilePhone = mobilePhone;
+    this.workPhone = workPhone;
+    this.faxPhone = faxPhone;
+    this.email1 = email1;
+    this.email2 = email2;
+    this.email3 = email3;
+    this.homePage = homePage;
+    this.birthDay = birthDay;
+    this.birthMonth = birthMonth;
+    this.birthYear = birthYear;
+    this.anniversaryDay = anniversaryDay;
+    this.anniversaryMonth = anniversaryMonth;
+    this.anniversaryYear = anniversaryYear;
+    this.contactGroup = contactGroup;
+    this.additionalAddress = additionalAddress;
+    this.additionalHome = additionalHome;
+    this.additionalNotes = additionalNotes;
+  }
 
   public String getFirstName() {
     return firstName;
@@ -154,5 +185,26 @@ public class ContactData {
 
   public String getAdditionalNotes() {
     return additionalNotes;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, lastName, address);
   }
 }

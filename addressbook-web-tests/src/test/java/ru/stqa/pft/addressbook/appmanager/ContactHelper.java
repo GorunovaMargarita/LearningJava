@@ -2,9 +2,14 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase{
 
@@ -54,8 +59,8 @@ public class ContactHelper extends HelperBase{
     type(By.name("notes"),contactData.getAdditionalNotes());
   }
 
-  public void selectContact() {
-    click(By.name("selected[]"));
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void submitContactDeletion() {
@@ -79,5 +84,22 @@ public class ContactHelper extends HelperBase{
     fillContactForm(contact,true);
     submitContactCreation();
     returnToHomePage();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    //найти все элементы, которые имеют тэг tr и name entry
+    List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
+    //проходим по всем элементам, заполняем список контактов, которые есть на странице
+    for (WebElement element : elements){
+      //получаем ID
+      int id = Integer.parseInt(element.findElement(By.name("selected[]")).getAttribute("value"));
+      String firstName = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
+      String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
+      String address = element.findElement(By.cssSelector("td:nth-child(4)")).getText();
+      ContactData contact = new ContactData(id,firstName,null,lastName,null,null,null,address,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+      contacts.add(contact);
+    }
+    return contacts;
   }
 }
