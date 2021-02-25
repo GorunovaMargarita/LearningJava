@@ -24,7 +24,7 @@ public class ContactDeletionTests extends TestBase {
     Assert.assertEquals(after.size(),before.size()-1);
     //удаляем из before элемент, выбранный для удаления
     before.remove(before.size()-1);
-    //преобразуем списки в множества и сравниваем
+    //сравниваем списки
     Assert.assertEquals(before,after);
   }
 }

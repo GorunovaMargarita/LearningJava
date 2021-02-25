@@ -67,8 +67,9 @@ public class ContactHelper extends HelperBase{
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void initContactModification() {
-    click(By.xpath("//img[@alt='Edit']"));
+  public void initContactModification(int index) {
+    //нажимаем на карандашик, пример ссылки <a href="edit.php?id=62"><img src="icons/pencil.png" title="Edit" alt="Edit"></a>
+    click(By.xpath("//a[@href='edit.php?id=" + index + "']"));
   }
 
   public void submitContactModification() {
