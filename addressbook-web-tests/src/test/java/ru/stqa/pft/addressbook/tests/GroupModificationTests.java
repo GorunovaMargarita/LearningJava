@@ -1,31 +1,31 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupModificationTests extends TestBase {
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().groupPage();
+    if (app.group().list().size()==0) {
+      app.group().create(new GroupData("test12", null, null));
+    }
+  }
   @Test
   public void testGroupModification() {
-    app.getNavigationHelper().goToGroupPage();
-    if (! app.getGroupHelper().isThereAGroup()) {
-      app.getGroupHelper().createGroup(new GroupData("test12", null, null));
-    }
-    List<GroupData> before = app.getGroupHelper().getGroupList();
-    app.getGroupHelper().selectGroup(before.size()-1);
-    app.getGroupHelper().initGroupModification();
-    GroupData group = new GroupData(before.get(before.size()-1).getId(),"test1", "test2", "test3");
-    app.getGroupHelper().fillGroupForm(group);
-    app.getGroupHelper().submitGroupModification();
-    app.getGroupHelper().returnToGroupPage();
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> before = app.group().list();
+    int index=before.size()-1;
+    GroupData group = new GroupData(before.get(index).getId(),"test1", "test2", "test3");
+    app.group().modify(group,index);
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(),before.size());
     //убираем элемент, который меняли
-    before.remove(before.size()-1);
+    before.remove(index);
     //добавляем элемент, который меняли в изменённом виде
     before.add(group);
     //способ сравнения списков, когда мы сортируем оба при помощи лямбда выражения по ID, а потом сравниваем
@@ -37,4 +37,6 @@ public class GroupModificationTests extends TestBase {
     //Необходимо сравненение по именам и ID,т.к. иначе списки по с одинаковыми name схлопнутся.
     //Assert.assertEquals(new HashSet<Object>(before),new HashSet<Object>(after));
   }
+
+
 }
