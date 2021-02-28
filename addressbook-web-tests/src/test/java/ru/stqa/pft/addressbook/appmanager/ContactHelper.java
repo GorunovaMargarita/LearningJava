@@ -3,13 +3,12 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase{
 
@@ -59,17 +58,17 @@ public class ContactHelper extends HelperBase{
     type(By.name("notes"),contactData.getAdditionalNotes());
   }
 
-  public void selectContact(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
   }
 
   public void submitContactDeletion() {
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void initContactModification(int index) {
+  public void initContactModification(int id) {
     //нажимаем на карандашик, пример ссылки <a href="edit.php?id=62"><img src="icons/pencil.png" title="Edit" alt="Edit"></a>
-    click(By.xpath("//a[@href='edit.php?id=" + index + "']"));
+    click(By.xpath("//a[@href='edit.php?id=" + id + "']"));
   }
 
   public void submitContactModification() {
@@ -87,20 +86,21 @@ public class ContactHelper extends HelperBase{
     returnToHomePage();
   }
 
-  public void modify(int index, ContactData contact) {
-    initContactModification(index);
+  public void modify(ContactData contact) {
+    initContactModification(contact.getId());
     fillContactForm(contact,false);
     submitContactModification();
     returnToHomePage();
   }
 
-  public void delete(int index) {
-    selectContact(index);
+  public void delete(ContactData contact) {
+    selectContactById(contact.getId());
     submitContactDeletion();
   }
 
-  public List<ContactData> list() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
+
+  public Set<ContactData> all() {
+    Set<ContactData> contacts = new HashSet<ContactData>();
     //найти все элементы, которые имеют тэг tr и name entry
     List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
     //проходим по всем элементам, заполняем список контактов, которые есть на странице
@@ -110,9 +110,10 @@ public class ContactHelper extends HelperBase{
       String firstName = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
       String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
       String address = element.findElement(By.cssSelector("td:nth-child(4)")).getText();
-      ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address);
-      contacts.add(contact);
+      contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address));
     }
     return contacts;
   }
+
+
 }

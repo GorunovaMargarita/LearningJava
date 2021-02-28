@@ -16,10 +16,10 @@ public class GroupCreationTests extends TestBase {
     GroupData group = new GroupData().withName("test2");
     app.group().create(group);
     Groups after = app.group().all();
-    assertThat(after.size(),equalTo(before.size()+1));
+    assertThat(after.size(), equalTo(before.size() + 1));
     //из потока объектов типа GroupData получаем поток целых чисел, получаем максимальное число, преобразуем результат в целое число
     assertThat(after, equalTo(
-            before.withAdded(group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
+            before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     //ищем индентификатор новой группы как максимальный индентификатор
     //присваиваем найденный макс ID новой группе
     //group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
