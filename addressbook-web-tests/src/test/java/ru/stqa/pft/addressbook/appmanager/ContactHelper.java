@@ -110,7 +110,7 @@ public class ContactHelper extends HelperBase{
       String firstName = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
       String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
       String address = element.findElement(By.cssSelector("td:nth-child(4)")).getText();
-      ContactData contact = new ContactData(id,firstName,null,lastName,null,null,null,address,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+      ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address);
       contacts.add(contact);
     }
     return contacts;
