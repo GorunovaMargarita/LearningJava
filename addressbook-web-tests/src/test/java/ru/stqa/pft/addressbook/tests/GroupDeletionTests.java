@@ -17,14 +17,14 @@ public class GroupDeletionTests extends TestBase {
     }
   }
 
-  @Test(enabled = false)
+  @Test
   public void testGroupDeletion() throws Exception {
     Groups before = app.group().all();
     //берём группу из множества
     GroupData deletedGroup = before.iterator().next();
     app.group().delete(deletedGroup);
+    assertThat(app.group().count(), equalTo(before.size() - 1));
     Groups after = app.group().all();
-    assertThat(after.size(), equalTo(before.size() - 1));
     assertThat(after, equalTo(before.without(deletedGroup)));
   }
 

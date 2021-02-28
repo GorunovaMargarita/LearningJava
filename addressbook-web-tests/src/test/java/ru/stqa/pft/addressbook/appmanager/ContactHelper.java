@@ -84,6 +84,7 @@ public class ContactHelper extends HelperBase{
     initContactCreation();
     fillContactForm(contact,true);
     submitContactCreation();
+    contactCache=null;
     returnToHomePage();
   }
 
@@ -91,6 +92,7 @@ public class ContactHelper extends HelperBase{
     initContactModification(contact.getId());
     fillContactForm(contact,false);
     submitContactModification();
+    contactCache=null;
     returnToHomePage();
   }
 
@@ -98,14 +100,22 @@ public class ContactHelper extends HelperBase{
     selectContactById(contact.getId());
     submitContactDeletion();
     closeAlert();
+    contactCache=null;
   }
   public void closeAlert() {
     wd.switchTo().alert().accept();
   }
+  public int count() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 
+  private Contacts contactCache=null;
 
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if (contactCache!=null) {
+      return new Contacts(contactCache);
+    }
+    contactCache = new Contacts();
     //найти все элементы, которые имеют тэг tr и name entry
     List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
     //проходим по всем элементам, заполняем список контактов, которые есть на странице
@@ -115,9 +125,9 @@ public class ContactHelper extends HelperBase{
       String firstName = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
       String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
       String address = element.findElement(By.cssSelector("td:nth-child(4)")).getText();
-      contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address));
+      contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address));
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 
 

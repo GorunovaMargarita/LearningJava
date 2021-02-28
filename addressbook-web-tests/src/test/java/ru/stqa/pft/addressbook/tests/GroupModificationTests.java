@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -17,7 +18,7 @@ public class GroupModificationTests extends TestBase {
     }
   }
 
-  @Test(enabled = false)
+  @Test
   public void testGroupModification() {
     Groups before = app.group().all();
     //берём группу из множества
@@ -25,8 +26,8 @@ public class GroupModificationTests extends TestBase {
     GroupData group = new GroupData()
             .withId(modifiedGroup.getId()).withName("test100").withHeader("test2").withFooter("test3");
     app.group().modify(group);
+    assertThat(app.group().count(), CoreMatchers.equalTo(before.size()));
     Groups after = app.group().all();
-    assertThat(after.size(), equalTo(before.size()));
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
   }
 
