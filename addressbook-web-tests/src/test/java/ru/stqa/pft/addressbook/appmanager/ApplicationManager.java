@@ -44,9 +44,6 @@ public class ApplicationManager {
     wd.findElement(By.linkText("Logout")).click();
     wd.quit();
   }
-  public void closeAlert() {
-    wd.switchTo().alert().accept();
-  }
 
   public GroupHelper group() {
     return groupHelper;

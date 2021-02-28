@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.HashSet;
 import java.util.List;
@@ -96,11 +97,15 @@ public class ContactHelper extends HelperBase{
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     submitContactDeletion();
+    closeAlert();
+  }
+  public void closeAlert() {
+    wd.switchTo().alert().accept();
   }
 
 
-  public Set<ContactData> all() {
-    Set<ContactData> contacts = new HashSet<ContactData>();
+  public Contacts all() {
+    Contacts contacts = new Contacts();
     //найти все элементы, которые имеют тэг tr и name entry
     List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
     //проходим по всем элементам, заполняем список контактов, которые есть на странице
