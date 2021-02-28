@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -7,10 +9,13 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import java.util.HashSet;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.*;
+
 public class ContactCreationTests extends TestBase {
 
 
-  @Test(enabled = false)
+  @Test
   public void testContactCreation() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().initContactCreation();
@@ -19,12 +24,14 @@ public class ContactCreationTests extends TestBase {
     List<ContactData> after = app.getContactHelper().getContactList();
     //сравниваем размеры списков до и после, должен увеличиться на 1
     Assert.assertEquals(after.size(),before.size()+1);
+    //assertThat(after.size(), equalTo(before.size()+1));
     //получаем ID созданного контакта, как максимальный ID в after
     contact.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     //добавляем созданный контакт в изначальный список
     before.add(contact);
     //преобразуем списки в множества и сравниваем
     Assert.assertEquals(new HashSet<Object>(before),new HashSet<Object>(after));
+    //assertThat(after, equalTo(before));
   }
 
 }

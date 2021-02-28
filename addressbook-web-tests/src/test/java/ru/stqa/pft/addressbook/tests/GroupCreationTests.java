@@ -1,25 +1,25 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
-  @Test
+  @Test(enabled = false)
   public void testGroupCreation() throws Exception {
     app.goTo().groupPage();
-    Set<GroupData> before = app.group().all();
+    Groups before = app.group().all();
     GroupData group = new GroupData().withName("test2");
     app.group().create(group);
-    Set<GroupData> after = app.group().all();
-    Assert.assertEquals(after.size(),before.size()+1);
+    Groups after = app.group().all();
+    assertThat(after.size(),equalTo(before.size()+1));
     //из потока объектов типа GroupData получаем поток целых чисел, получаем максимальное число, преобразуем результат в целое число
-    group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
-    before.add(group);
-    Assert.assertEquals(before,after);
+    assertThat(after, equalTo(
+            before.withAdded(group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     //ищем индентификатор новой группы как максимальный индентификатор
     //присваиваем найденный макс ID новой группе
     //group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());

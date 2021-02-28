@@ -87,6 +87,18 @@ public class ContactHelper extends HelperBase{
     returnToHomePage();
   }
 
+  public void modifyContact(int index, ContactData contact) {
+    initContactModification(index);
+    fillContactForm(contact,false);
+    submitContactModification();
+    returnToHomePage();
+  }
+
+  public void deleteContact(int index) {
+    selectContact(index);
+    submitContactDeletion();
+  }
+
   public List<ContactData> getContactList() {
     List<ContactData> contacts = new ArrayList<ContactData>();
     //найти все элементы, которые имеют тэг tr и name entry
