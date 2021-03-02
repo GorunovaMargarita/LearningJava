@@ -29,6 +29,7 @@ public class ContactData {
   private  String additionalAddress;
   private  String additionalHome;
   private  String additionalNotes;
+  private String AllPhones;
 
 
   public String getFirstName() {
@@ -281,5 +282,14 @@ public class ContactData {
   @Override
   public int hashCode() {
     return Objects.hash(id, firstName, lastName, address);
+  }
+
+  public String getAllPhones() {
+    return AllPhones;
+  }
+
+  public ContactData withAllPhones(String allPhones) {
+    this.AllPhones = allPhones;
+    return this;
   }
 }
