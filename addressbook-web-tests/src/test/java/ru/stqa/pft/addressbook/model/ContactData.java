@@ -30,6 +30,7 @@ public class ContactData {
   private  String additionalHome;
   private  String additionalNotes;
   private String AllPhones;
+  private String AllEmails;
 
 
   public String getFirstName() {
@@ -138,6 +139,14 @@ public class ContactData {
 
   public void setId(int id) {
     this.id = id;
+  }
+  public String getAllPhones() {
+    return AllPhones;
+  }
+
+
+  public String getAllEmails() {
+    return AllEmails;
   }
 
   public ContactData withId(int id) {
@@ -269,7 +278,15 @@ public class ContactData {
     this.additionalNotes = additionalNotes;
     return this;
   }
+  public ContactData withAllPhones(String allPhones) {
+    this.AllPhones = allPhones;
+    return this;
+  }
 
+  public ContactData withAllEmails(String allEmails) {
+    this.AllEmails = allEmails;
+    return this;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -284,12 +301,6 @@ public class ContactData {
     return Objects.hash(id, firstName, lastName, address);
   }
 
-  public String getAllPhones() {
-    return AllPhones;
-  }
 
-  public ContactData withAllPhones(String allPhones) {
-    this.AllPhones = allPhones;
-    return this;
-  }
+
 }
