@@ -1,24 +1,48 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ContactCreationTests extends TestBase {
+  @DataProvider
+  public Iterator<Object[]> validContactsFromJson() throws IOException {
+    //указывается путь к файлу относительно рабочей директории
+    File photo= new File("src/test/resources/3.png");
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")));
+    String json = "";
+    String line = reader.readLine();
+    while (line!=null) {
+      json+=line;
+      line= reader.readLine();
+    }
+    Gson gson = new Gson();
+    List<ContactData> contacts= gson.fromJson(json,new TypeToken<List<ContactData>>(){}.getType());
+    //чтобы каждый контакт создавался с фото
+    for (ContactData contact : contacts) {
+      contact.withPhoto(photo);
+    }
+    return contacts.stream().map((g)->new Object[]{g}).collect(Collectors.toList()).iterator();
+  }
 
-
-  @Test
-  public void testContactCreation() throws Exception {
+  @Test(dataProvider = "validContactsFromJson")
+  public void testContactCreation(ContactData contact) throws Exception {
     app.goTo().homePage();
     Contacts before = app.contact().all();
-    //указывается путь к файлу относительно рабочей директории
-    File photo= new File("src/test/resources/3.jpg");
-    ContactData contact = new ContactData().withPhoto(photo).withFirstName("FirstName5").withLastName("LastName1").withNickName("NickName1").withTitle("Title1").withMiddleName("MiddleName1").withAddress("Address1").withCompany("Company1").withWorkPhone("1111").withFaxPhone("1111").withMobilePhone("1111").withHomePhone("1111").withEmail1("mail1@mail.ru").withEmail2("mail2@gmail.com").withEmail3("mail3@ya.ru").withHomePage("HomePage1").withBirthDay("7").withBirthMonth("November").withBirthYear("1989").withAnniversaryDay("17").withAnniversaryMonth("January").withAnniversaryYear("2020").withContactGroup("test1").withAdditionalAddress("Address2").withHomePage("Home2").withAdditionalNotes("Notes1");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.contact().all();

@@ -17,12 +17,18 @@ public class ContactData {
   private String company;
   @Expose
   private  String address;
+  @Expose
   private  String homePhone;
+  @Expose
   private  String mobilePhone;
+  @Expose
   private  String workPhone;
   private  String faxPhone;
+  @Expose
   private  String email1;
+  @Expose
   private  String email2;
+  @Expose
   private  String email3;
   private  String homePage;
   private  String birthDay;
