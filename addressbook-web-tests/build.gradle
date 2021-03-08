@@ -22,4 +22,8 @@ task testContacts(type: Test) {
     useTestNG {
         suites 'src/test/resources/testng-contacts.xml'
     }
+    if (project.hasProperty('browser')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'browser',"${browser}"
+    }
 }
