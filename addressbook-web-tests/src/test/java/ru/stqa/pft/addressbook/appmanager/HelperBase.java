@@ -37,8 +37,8 @@ public class HelperBase {
   }
 
   public void selectFromList(By locator, String text) {
-    click(locator);
     if (text != null) {
+      click(locator);
       //игнорируем отсутствие групп в списке, но для прочих списков проверяем, что значение есть
       if (!locator.equals(By.name("new_group"))) {
         Assert.assertEquals(isTextInListPresent(locator, text), true);

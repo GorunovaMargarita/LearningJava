@@ -26,4 +26,8 @@ task testContacts(type: Test) {
         //системное свойство для запускаемых тестов приравняли к свойству сборщика
         systemProperty 'browser',"${browser}"
     }
+    if (project.hasProperty('target')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'target',"${target}"
+    }
 }

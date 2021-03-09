@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -10,7 +11,7 @@ public class TestBase {
   /*protected static final ApplicationManager app
         = new ApplicationManager(BrowserType.FIREFOX);*/
 protected static final ApplicationManager app
-        = new ApplicationManager(System.getProperty("browser"),BrowserType.CHROME);
+        =new ApplicationManager(System.getProperty("browser",BrowserType.CHROME));
 
 //для того, чтобы браузер не открывался каждый раз используем @BeforeSuite, а не @BeforeMethod
   @BeforeSuite(alwaysRun = true)
