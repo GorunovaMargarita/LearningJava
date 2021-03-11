@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -21,14 +23,20 @@ public class ContactDeletionTests extends TestBase {
   public void testContactDeletion() {
     app.goTo().homePage();
     Contacts before = app.contact().all();
+    System.out.println("было: " + before.size());
     //iterator позволяет последовательно перебирать элелементы множества
     ContactData deletedContact = before.iterator().next();
     app.contact().delete(deletedContact);
     app.goTo().homePage();
-    assertThat(app.contact().count(), equalTo(before.size() - 1));
+    int count = app.contact().count();
+    System.out.println("стало после удаления: " +count);
+    int countBefore =before.size() - 1;
+    System.out.println("должно было стать после удаления: "+ countBefore);
+    assertThat(count, equalTo(countBefore));
     Contacts after = app.contact().all();
     //сравниваем размеры списков до и после, должен уменьшиться на 1
-    assertThat(after, equalTo(before.without(deletedContact)));
+    Contacts beforeWithoutDeleted = before.without(deletedContact);
+    assertThat(after, equalTo(beforeWithoutDeleted));
   }
 
 }

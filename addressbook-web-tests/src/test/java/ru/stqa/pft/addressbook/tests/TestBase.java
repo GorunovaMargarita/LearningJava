@@ -11,7 +11,7 @@ public class TestBase {
   /*protected static final ApplicationManager app
         = new ApplicationManager(BrowserType.FIREFOX);*/
 protected static final ApplicationManager app
-        =new ApplicationManager(System.getProperty("browser",BrowserType.CHROME));
+        =new ApplicationManager(System.getProperty("browser",BrowserType.FIREFOX));
 
 //для того, чтобы браузер не открывался каждый раз используем @BeforeSuite, а не @BeforeMethod
   @BeforeSuite(alwaysRun = true)
