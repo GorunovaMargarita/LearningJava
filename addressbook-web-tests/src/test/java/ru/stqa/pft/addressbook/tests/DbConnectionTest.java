@@ -1,10 +1,14 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.hibernate.Session;
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.sql.*;
+import java.util.List;
 
 public class DbConnectionTest {
   @Test
@@ -35,4 +39,5 @@ public class DbConnectionTest {
       System.out.println("VendorError: " + ex.getErrorCode());
     }
   }
+
 }

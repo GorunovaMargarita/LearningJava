@@ -9,27 +9,5 @@
     "email1": "email0@gmail.com",
     "email2": "email0@ya.ru",
     "email3": "email0@mail.ru"
-  },
-  {
-    "firstName": "FirstName 1",
-    "lastName": "LastName 1",
-    "address": "Address 1",
-    "homePhone": "8812 1",
-    "mobilePhone": "+7911 1",
-    "workPhone": "+7960 1",
-    "email1": "email1@gmail.com",
-    "email2": "email1@ya.ru",
-    "email3": "email1@mail.ru"
-  },
-  {
-    "firstName": "FirstName 2",
-    "lastName": "LastName 2",
-    "address": "Address 2",
-    "homePhone": "8812 2",
-    "mobilePhone": "+7911 2",
-    "workPhone": "+7960 2",
-    "email1": "email2@gmail.com",
-    "email2": "email2@ya.ru",
-    "email3": "email2@mail.ru"
   }
 ]

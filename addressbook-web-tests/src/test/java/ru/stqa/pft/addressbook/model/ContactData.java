@@ -14,17 +14,18 @@ public class ContactData {
   @Column(name="id")
   private int id = Integer.MAX_VALUE;
   @Expose
-  @Column(name="firstName")
+  @Column(name="firstname")
   private String firstName;
+  @Column(name="middlename")
   private String middleName;
   @Expose
-  @Column(name="lastName")
+  @Column(name="lastname")
   private String lastName;
-  @Transient
+  @Column(name="nickname")
   private String nickName;
-  @Transient
+  @Column(name="title")
   private String title;
-  @Transient
+  @Column(name="company")
   private String company;
   @Expose
   @Column(name="address")
@@ -42,38 +43,46 @@ public class ContactData {
   @Column(name="work")
   @Type(type = "text")
   private  String workPhone;
-  @Transient
+  @Column(name="fax")
+  @Type(type = "text")
   private  String faxPhone;
   @Expose
-  @Transient
+  @Column(name="email")
+  @Type(type = "text")
   private  String email1;
   @Expose
-  @Transient
+  @Column(name="email2")
+  @Type(type = "text")
   private  String email2;
   @Expose
-  @Transient
+  @Column(name="email3")
+  @Type(type = "text")
   private  String email3;
-  @Transient
+  @Column(name="homepage")
+  @Type(type = "text")
   private  String homePage;
   @Transient
   private  String birthDay;
-  @Transient
+  @Column(name="bmonth")
   private  String birthMonth;
-  @Transient
+  @Column(name="byear")
   private  String birthYear;
   @Transient
   private  String anniversaryDay;
-  @Transient
+  @Column(name="amonth")
   private  String anniversaryMonth;
-  @Transient
+  @Column(name="ayear")
   private  String anniversaryYear;
   @Transient
   private  String contactGroup;
-  @Transient
+  @Column(name="address2")
+  @Type(type = "text")
   private  String additionalAddress;
-  @Transient
+  @Column(name="phone2")
+  @Type(type = "text")
   private  String additionalHome;
-  @Transient
+  @Column(name="notes")
+  @Type(type = "text")
   private  String additionalNotes;
   @Transient
   private String AllPhones;
@@ -353,7 +362,7 @@ public class ContactData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address);
+    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(middleName, that.middleName) && Objects.equals(lastName, that.lastName) && Objects.equals(nickName, that.nickName) && Objects.equals(title, that.title) && Objects.equals(company, that.company) && Objects.equals(address, that.address) && Objects.equals(homePhone, that.homePhone) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(workPhone, that.workPhone) && Objects.equals(faxPhone, that.faxPhone) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3) && Objects.equals(homePage, that.homePage) && Objects.equals(birthMonth, that.birthMonth) && Objects.equals(birthYear, that.birthYear) && Objects.equals(anniversaryMonth, that.anniversaryMonth) && Objects.equals(anniversaryYear, that.anniversaryYear) && Objects.equals(additionalAddress, that.additionalAddress) && Objects.equals(additionalHome, that.additionalHome) && Objects.equals(additionalNotes, that.additionalNotes);
   }
 
   @Override
@@ -367,6 +376,7 @@ public class ContactData {
             "id=" + id +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
             '}';
   }
 }
