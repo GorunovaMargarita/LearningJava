@@ -90,7 +90,7 @@ public class HelperBase {
   public boolean isTextInListPresent (By locator, byte text) {
     try {
       click(locator);
-      new Select(wd.findElement(locator)).selectByVisibleText(text);
+      new Select(wd.findElement(locator)).selectByValue(String.valueOf(text));
       return true;
     } catch(NoSuchElementException ex){
       return false;
