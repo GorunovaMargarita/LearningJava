@@ -54,6 +54,20 @@ public class ContactData {
   @Column(name="email2")
   @Type(type = "text")
   private  String email2;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(middleName, that.middleName) && Objects.equals(lastName, that.lastName) && Objects.equals(nickName, that.nickName) && Objects.equals(title, that.title) && Objects.equals(company, that.company) && Objects.equals(address, that.address) && Objects.equals(homePhone, that.homePhone) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(workPhone, that.workPhone) && Objects.equals(faxPhone, that.faxPhone) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3) && Objects.equals(homePage, that.homePage) && Objects.equals(birthDay, that.birthDay) && Objects.equals(birthMonth, that.birthMonth) && Objects.equals(birthYear, that.birthYear) && Objects.equals(anniversaryDay, that.anniversaryDay) && Objects.equals(anniversaryMonth, that.anniversaryMonth) && Objects.equals(anniversaryYear, that.anniversaryYear) && Objects.equals(additionalAddress, that.additionalAddress) && Objects.equals(additionalHome, that.additionalHome) && Objects.equals(additionalNotes, that.additionalNotes);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, lastName, address, birthDay, birthMonth, birthYear, anniversaryDay, anniversaryMonth, anniversaryYear, additionalAddress, additionalHome, additionalNotes);
+  }
+
   @Expose
   @Column(name="email3")
   @Type(type = "text")
@@ -61,14 +75,16 @@ public class ContactData {
   @Column(name="homepage")
   @Type(type = "text")
   private  String homePage;
-  @Transient
+  @Column(name="bday")
+  @Type(type = "byte")
   private  String birthDay;
   @Column(name="bmonth")
   private  String birthMonth;
   @Column(name="byear")
   private  String birthYear;
-  @Transient
-  private  String anniversaryDay;
+  @Column(name="aday")
+  @Type(type = "byte")
+  private  byte anniversaryDay;
   @Column(name="amonth")
   private  String anniversaryMonth;
   @Column(name="ayear")
@@ -93,7 +109,9 @@ public class ContactData {
   private String photo;
 
   public File getPhoto() {
-    return new File(photo);
+    if(photo!=null) {
+      return new File(photo);
+    } else return null;
   }
 
   public ContactData withPhoto(File photo) {
@@ -167,14 +185,14 @@ public class ContactData {
   }
 
   public String getBirthMonth() {
-    return birthMonth;
+      return birthMonth;
   }
 
   public String getBirthYear() {
     return birthYear;
   }
 
-  public String getAnniversaryDay() {
+  public byte getAnniversaryDay() {
     return anniversaryDay;
   }
 
@@ -313,13 +331,13 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withAnniversaryDay(String anniversaryDay) {
+  public ContactData withAnniversaryDay(byte anniversaryDay) {
     this.anniversaryDay = anniversaryDay;
     return this;
   }
 
   public ContactData withAnniversaryMonth(String anniversaryMonth) {
-    this.anniversaryMonth = anniversaryMonth;
+      this.anniversaryMonth = anniversaryMonth;
     return this;
   }
 
@@ -355,19 +373,6 @@ public class ContactData {
   public ContactData withAllEmails(String allEmails) {
     this.AllEmails = allEmails;
     return this;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(middleName, that.middleName) && Objects.equals(lastName, that.lastName) && Objects.equals(nickName, that.nickName) && Objects.equals(title, that.title) && Objects.equals(company, that.company) && Objects.equals(address, that.address) && Objects.equals(homePhone, that.homePhone) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(workPhone, that.workPhone) && Objects.equals(faxPhone, that.faxPhone) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3) && Objects.equals(homePage, that.homePage) && Objects.equals(birthMonth, that.birthMonth) && Objects.equals(birthYear, that.birthYear) && Objects.equals(anniversaryMonth, that.anniversaryMonth) && Objects.equals(anniversaryYear, that.anniversaryYear) && Objects.equals(additionalAddress, that.additionalAddress) && Objects.equals(additionalHome, that.additionalHome) && Objects.equals(additionalNotes, that.additionalNotes);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstName, lastName, address);
   }
 
   @Override

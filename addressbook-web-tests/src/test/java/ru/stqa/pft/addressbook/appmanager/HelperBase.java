@@ -48,6 +48,18 @@ public class HelperBase {
       }
     }
   }
+  public void selectFromList(By locator, Byte text) {
+    if (text != null) {
+      click(locator);
+      //игнорируем отсутствие групп в списке, но для прочих списков проверяем, что значение есть
+      if (!locator.equals(By.name("new_group"))) {
+        Assert.assertEquals(isTextInListPresent(locator, text), true);
+        new Select(wd.findElement(locator)).selectByValue(String.valueOf(text));
+      } else if (isTextInListPresent(locator, text)) {
+        new Select(wd.findElement(locator)).selectByValue(String.valueOf(text));
+      }
+    }
+  }
 
   public boolean isAlertPresent() {
     try {
@@ -71,6 +83,15 @@ public class HelperBase {
       click(locator);
       new Select(wd.findElement(locator)).selectByVisibleText(text);
         return true;
+    } catch(NoSuchElementException ex){
+      return false;
+    }
+  }
+  public boolean isTextInListPresent (By locator, byte text) {
+    try {
+      click(locator);
+      new Select(wd.findElement(locator)).selectByVisibleText(text);
+      return true;
     } catch(NoSuchElementException ex){
       return false;
     }
