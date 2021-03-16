@@ -51,7 +51,10 @@ public class ContactHelper extends HelperBase {
     selectFromList(By.name("amonth"), contactData.getAnniversaryMonth());
     type(By.name("ayear"), contactData.getAnniversaryYear());
     if (creation) {
-      selectFromList(By.name("new_group"), contactData.getContactGroup());
+      if (contactData.getGroups().size()>0) {
+        Assert.assertTrue(contactData.getGroups().size()==1);
+        selectFromList(By.name("new_group"), contactData.getGroups().iterator().next().getName());
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }

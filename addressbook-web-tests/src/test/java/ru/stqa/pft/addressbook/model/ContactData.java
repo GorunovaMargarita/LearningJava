@@ -5,7 +5,10 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 @Table(name="addressbook")
 
@@ -75,8 +78,8 @@ public class ContactData {
   private  String anniversaryMonth;
   @Column(name="ayear")
   private  String anniversaryYear;
-  @Transient
-  private  String contactGroup;
+  //@Transient
+  //private  String contactGroup;
   @Column(name="address2")
   @Type(type = "text")
   private  String additionalAddress;
@@ -93,6 +96,14 @@ public class ContactData {
   @Column(name="photo")
   @Type(type = "text")
   private String photo;
+//получить макс. инфо за заход в бд
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name="address_in_groups"
+          , joinColumns =@JoinColumn(name="id")
+          , inverseJoinColumns = @JoinColumn(name="group_id"))
+  //инициализируем, создавая пустое множество
+  private Set<GroupData> groups = new HashSet<GroupData>();
+
 
   public File getPhoto() {
     if(photo!=null) {
@@ -190,9 +201,6 @@ public class ContactData {
     return anniversaryYear;
   }
 
-  public String getContactGroup() {
-    return contactGroup;
-  }
 
   public String getAdditionalAddress() {
     return additionalAddress;
@@ -332,10 +340,10 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withContactGroup(String contactGroup) {
-    this.contactGroup = contactGroup;
-    return this;
+  public Groups getGroups() {
+    return new Groups(groups);
   }
+
 
   public ContactData withAdditionalAddress(String additionalAddress) {
     this.additionalAddress = additionalAddress;
@@ -383,4 +391,8 @@ public class ContactData {
     return Objects.hash(id, firstName, lastName, address, birthDay, birthMonth, birthYear, anniversaryDay, anniversaryMonth, anniversaryYear, additionalAddress, additionalHome, additionalNotes);
   }
 
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
+  }
 }

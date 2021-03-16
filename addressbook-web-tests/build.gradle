@@ -20,6 +20,18 @@ task testGroups(type: Test) {
     useTestNG {
         suites 'src/test/resources/testng-groups.xml'
     }
+    if (project.hasProperty('browser')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'browser',"${browser}"
+    }
+    if (project.hasProperty('target')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'target',"${target}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'verifyUI',"${verifyUI}"
+    }
 }
 task testContacts(type: Test) {
     useTestNG {
@@ -32,5 +44,9 @@ task testContacts(type: Test) {
     if (project.hasProperty('target')) {
         //системное свойство для запускаемых тестов приравняли к свойству сборщика
         systemProperty 'target',"${target}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'verifyUI',"${verifyUI}"
     }
 }
