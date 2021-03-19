@@ -1,11 +1,14 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
+
+import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -25,16 +28,36 @@ public class ContactDeleteFromGroup extends TestBase{
       app.group().create(new GroupData().withName("test1"));
     }
   }
+  @DataProvider
+  public ContactData contactForDeletionFromGroup () {
+    Contacts beforeContacts = app.db().contacts();
+    Groups groups = app.db().groups();
+    Contacts beforeContactsInGroups = new Contacts();
+    ContactData contactForDeletionFromGroup;
+    GroupData groupForContactDeletion;
+    for (ContactData contact : beforeContacts) {
+      if (contact.getGroups().size()!=0){
+        beforeContactsInGroups = beforeContactsInGroups.withAdded(contact);
+      }
+    }
+    if (beforeContactsInGroups.size()==0) {
+      contactForDeletionFromGroup =  beforeContacts.iterator().next();
+      groupForContactDeletion = groups.iterator().next();
+      app.contact().addContactToGroup(contactForDeletionFromGroup,groupForContactDeletion);
+    } else {
+      contactForDeletionFromGroup =  beforeContactsInGroups.iterator().next();
+      groupForContactDeletion = contactForDeletionFromGroup.getGroups().iterator().next();
+    }
+    return contactForDeletionFromGroup;
+  }
 
   @Test
   public void testDeleteContactFromGroup (){
     app.goTo().homePage();
-    Contacts beforeContacts = app.db().contacts();
-    ContactData contactForDeletionFromGroup =  beforeContacts.iterator().next();
-    GroupData groupForContactDeletion = contactForDeletionFromGroup.getGroups().iterator().next();
-    Groups contactGroupBefore = contactForDeletionFromGroup.getGroups();
+
+    Groups contactGroupBefore = app.db().contactWithId(contactForDeletionFromGroup.getId()).getGroups();
     app.contact().deleteContactFromGroup(contactForDeletionFromGroup,groupForContactDeletion);
-    Groups contactGroupAfter = contactForDeletionFromGroup.getGroups();
+    Groups contactGroupAfter = app.db().contactWithId(contactForDeletionFromGroup.getId()).getGroups();
     assertThat(contactGroupAfter,equalTo(contactGroupBefore.without(groupForContactDeletion)));
   }
 }
