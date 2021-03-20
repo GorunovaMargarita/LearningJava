@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.4.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-7'
+    implementation 'org.hamcrest:java-hamcrest:2.0.0.0'
+}
+
+test {
+    useTestNG {
+        suites 'src/test/resources/testng.xml'
+    }
+    if (project.hasProperty('browser')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'browser',"${browser}"
+    }
+    if (project.hasProperty('target')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'target',"${target}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        //системное свойство для запускаемых тестов приравняли к свойству сборщика
+        systemProperty 'verifyUI',"${verifyUI}"
+    }
+}
