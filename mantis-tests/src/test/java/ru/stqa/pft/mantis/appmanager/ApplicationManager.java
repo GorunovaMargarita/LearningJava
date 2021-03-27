@@ -22,6 +22,8 @@ public class ApplicationManager {
   private RegistrationHelper registrationHelper;
   private FtpHelper ftp;
   private MailHelper mailHelper;
+  private JamesHelper jamesHelper;
+  private NavigationHelper navigationHelper;
 
 
   public ApplicationManager(String browser)  {
@@ -81,5 +83,18 @@ public class ApplicationManager {
       mailHelper = new MailHelper(this);
     }
     return mailHelper;
+  }
+
+  public JamesHelper james(){
+    if(jamesHelper==null) {
+      jamesHelper = new JamesHelper(this);
+    }
+    return jamesHelper;
+  }
+  public NavigationHelper goTo() {
+    if(navigationHelper==null){
+      navigationHelper = new NavigationHelper(this);
+    }
+    return navigationHelper;
   }
 }
