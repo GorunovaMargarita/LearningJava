@@ -62,6 +62,7 @@ public class ApplicationManager {
   public GroupHelper group() {
     return groupHelper;
   }
+
   public DbHelper db() {
     return dbHelper;
   }
