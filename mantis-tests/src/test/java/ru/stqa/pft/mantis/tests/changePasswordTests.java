@@ -9,7 +9,8 @@ public class changePasswordTests extends TestBase{
   public void testChangePassword() throws IOException {
     app.goTo().login(app.getProperty("web.adminLogin"),app.getProperty("web.adminPassword"));
     app.goTo().homePage();
-    app.user().changeUserPasswd();
+    String email = "emai@email.ru";
+    app.user().changeUserPasswd(email);
   }
 
 

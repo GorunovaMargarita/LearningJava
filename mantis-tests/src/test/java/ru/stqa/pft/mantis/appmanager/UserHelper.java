@@ -7,7 +7,7 @@ public class UserHelper extends HelperBase{
     super(app);
   }
 
-  public void changeUserPasswd(String email,String) {
+  public void changeUserPasswd(String email) {
     app.goTo().manage();
     app.goTo().manageUsers();
     type(By.name("search"),email);
