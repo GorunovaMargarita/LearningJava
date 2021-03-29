@@ -40,9 +40,9 @@ public void createUser (String name, String passwd){
   String result = readUntil("User " + name + " added");
   closeTelnetSession();
 }
-  public void deleteUser (String name, String passwd){
+  public void deleteUser (String name){
     initTelnetSession();
-    write("deluser " + name + " " + passwd);
+    write("deluser " + name);
     String result = readUntil("User " + name + " deleted");
     closeTelnetSession();
   }
@@ -104,7 +104,7 @@ public void createUser (String name, String passwd){
 
   private void closeTelnetSession() {write("quit");}
 
-  private void drainEmail(String username, String password) throws MessagingException {
+  public void drainEmail(String username, String password) throws MessagingException {
     Folder inbox = openInbox(username,password);
     for (Message message: inbox.getMessages()){
       message.setFlag(Flags.Flag.DELETED,true);

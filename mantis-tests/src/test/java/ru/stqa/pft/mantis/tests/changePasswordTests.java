@@ -14,10 +14,17 @@ public class changePasswordTests extends TestBase{
   public void testChangePassword() throws IOException, MessagingException {
     Users users = app.db().users();
     UserData userForChangePass = users.iterator().next();
+    if(userForChangePass.getUsername().equals("administrator")){
+      users.without(userForChangePass);
+      userForChangePass = users.iterator().next();
+    }
     app.goTo().login(app.getProperty("web.adminLogin"),app.getProperty("web.adminPassword"));
     app.goTo().homePage();
     //UserData user = new UserData().withEmail("testmail1@mail.ru").withPassword("password");
     String newPasswd = "newpass";
+    if(app.james().doesUserExist(userForChangePass.getUsername())){
+      app.james().deleteUser(userForChangePass.getUsername());
+    }
     app.james().createUser(userForChangePass.getUsername(),userForChangePass.getPassword());
     app.user().changeUserPasswd(userForChangePass,newPasswd);
     assertTrue(app.newSession().login(userForChangePass.getUsername(),newPasswd));

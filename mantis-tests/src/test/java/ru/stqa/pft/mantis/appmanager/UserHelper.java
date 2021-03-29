@@ -19,13 +19,14 @@ public class UserHelper extends HelperBase{
   public void changeUserPasswd(UserData user,String password) throws IOException, MessagingException {
     app.goTo().manage();
     app.goTo().manageUsers();
+    app.james().drainEmail(user.getUsername(), user.getPassword());
     type(By.id("search"), user.getEmail());
     click(By.cssSelector("input[type='submit']"));
     wd.findElement(By.linkText(user.getUsername())).click();
     wd.findElement(By.xpath("//input[@value='Сбросить пароль']")).click();
     List<MailMessage> mailMessages = app.james().waitForMail(user.getUsername(), user.getPassword(), 60000);
     String confirmationLink = findConfirmationLink(mailMessages, user.getEmail());
-    app.registration().finish(confirmationLink, password);
+    app.registration().finish(confirmationLink,password);
   }
 
   public String findConfirmationLink(List<MailMessage> mailMessages, String email) {
