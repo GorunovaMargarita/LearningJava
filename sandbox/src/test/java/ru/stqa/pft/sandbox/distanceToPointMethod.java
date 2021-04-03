@@ -8,7 +8,7 @@ public class distanceToPointMethod {
   public void TestArea () {
     Point p1 = new Point (5,9);
     Point p2 = new Point (2,5);
-    Assert.assertEquals (p1.distanceToPointMethod(p2),6.0);
+    Assert.assertEquals (p1.distanceToPointMethod(p2),5.0);
   }
   @Test
   public void TestArea1 () {
