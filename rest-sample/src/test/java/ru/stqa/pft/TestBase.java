@@ -1,10 +1,8 @@
 package ru.stqa.pft;
+
 import org.testng.SkipException;
 
-
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.Set;
 
