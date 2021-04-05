@@ -3,6 +3,9 @@ apply plugin: 'java'
 repositories {
     mavenCentral()
 }
+configurations {
+    agent
+}
 
 dependencies {
     implementation 'org.testng:testng:7.4.0'
@@ -14,7 +17,12 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.3.0-alpha5'
     implementation 'mysql:mysql-connector-java:8.0.23'
     implementation 'org.hibernate:hibernate-core:5.4.29.Final'
+    agent "org.aspectj:aspectjweaver:1.8.0"
+    compile "ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4"
 }
+
+
+
 
 task testGroups(type: Test) {
     useTestNG {
@@ -35,6 +43,9 @@ task testGroups(type: Test) {
         //системное свойство для запускаемых тестов приравняли к свойству сборщика
         systemProperty 'verifyUI',"${verifyUI}"
     }
+}
+testGroups.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
 task testContacts(type: Test) {
     useTestNG {
