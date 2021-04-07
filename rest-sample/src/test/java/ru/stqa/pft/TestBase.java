@@ -11,8 +11,10 @@ public class TestBase {
 
 
   public boolean isIssueOpen(int issueId) throws IOException {
-    if (IssueHelper.getIssueById(issueId)!=null) {
-      String issueStatus = IssueHelper.getIssueById(issueId).getStateName();
+    //Issue issueWithId = IssueHelper.getIssueById(issueId);
+    Issue issueWithId = IssueHelper.getIssueByIdAPI(issueId);
+    if (issueWithId!=null) {
+      String issueStatus = issueWithId.getStateName();
       if(issueStatus.equals("Closed")){
         return false;
       } else {
