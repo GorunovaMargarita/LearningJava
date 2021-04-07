@@ -11,7 +11,7 @@ import static org.testng.Assert.assertEquals;
 public class RestTest extends TestBase{
   @Test
   public void testCreateIssue() throws IOException {
-    skipIfNotFixed(705);
+    skipIfNotFixed(706);
     Set<Issue> oldIssues =IssueHelper.getIssues();
     System.out.println(oldIssues);
     Issue newIssue = new Issue().withSubject("test issue").withDescription("new test issue");

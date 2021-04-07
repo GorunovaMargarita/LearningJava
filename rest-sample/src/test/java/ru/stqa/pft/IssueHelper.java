@@ -9,10 +9,25 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class IssueHelper {
 
+
+
+  public static Issue getIssueById (int issueId) throws IOException {
+      Set<Issue> issues = getIssues();
+      Set<Issue> issueWithId = issues.stream().filter(Issue -> Objects.equals(issueId, Issue.getId())).collect(Collectors.toSet());
+      //issues.stream().filter(Issue -> Objects.equals(issueId, Issue.getId())).findFirst().get();
+      if(issueWithId.size()==0) {
+        return null;
+      } else {
+        Issue issue = issueWithId.iterator().next();
+        return issue;
+      }
+    }
 
   public static Set<Issue> getIssues() throws IOException {
     String json =getExecutor().execute(Request.Get("https://bugify.stqa.ru/api/issues.json")).returnContent().asString();

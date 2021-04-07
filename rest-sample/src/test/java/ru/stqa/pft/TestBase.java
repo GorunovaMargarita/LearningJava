@@ -11,14 +11,17 @@ public class TestBase {
 
 
   public boolean isIssueOpen(int issueId) throws IOException {
-    Set<Issue> issues =IssueHelper.getIssues();
-    Issue issue = issues.stream().filter(Issue -> Objects.equals(issueId, Issue.getId())).findFirst().get();
-    if(issue.getStateName().equals("Closed")){
-      return false;
-    } else {
-      return true;
+    if (IssueHelper.getIssueById(issueId)!=null) {
+      String issueStatus = IssueHelper.getIssueById(issueId).getStateName();
+      if(issueStatus.equals("Closed")){
+        return false;
+      } else {
+        return true;
+      }
     }
+    return false;
   }
+
   public void skipIfNotFixed(int issueId) throws IOException {
     if (isIssueOpen(issueId)) {
       throw new SkipException("Ignored because of issue " + issueId);
